@@ -7,29 +7,8 @@ public class GamePause : MonoBehaviour
     public static bool GameIsPause = false;
 
     // Update is called once per frame
-    void Update()
+    public void ChangeState()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPause)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+        GameIsPause = !GameIsPause;
     }    
-    void Resume()
-    {
-        Time.timeScale = 1f;
-        GameIsPause = false;
-    }
-    
-    void Pause()
-    {        
-        Time.timeScale = 0f;
-        GameIsPause = true;
-    }
 }

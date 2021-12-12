@@ -91,11 +91,14 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log(_gameController);
-        Debug.Log(mapPosition.ToString());
-        SwithPlaceColor(Color.blue);
-        _gameController.doSwith(this);
-        _gameController.FindMatches();
+        if (!GamePause.GameIsPause)
+        {
+            Debug.Log(_gameController);
+            Debug.Log(mapPosition.ToString());
+            SwithPlaceColor(Color.blue);
+            _gameController.doSwith(this);
+            _gameController.FindMatches();
+        }
     }
 
     public void Reset()

@@ -9772,6 +9772,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 243
       objectReference: {fileID: 0}
+    - target: {fileID: 3255777669975087612, guid: c340e53cf033c24429910c41159cfc65, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255777669975087612, guid: c340e53cf033c24429910c41159cfc65, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3255777668158312940}
+    - target: {fileID: 3255777669975087612, guid: c340e53cf033c24429910c41159cfc65, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255777669975087612, guid: c340e53cf033c24429910c41159cfc65, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c340e53cf033c24429910c41159cfc65, type: 3}
 --- !u!224 &3255777668158312933 stripped
@@ -9804,3 +9820,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3255777669787168650, guid: c340e53cf033c24429910c41159cfc65, type: 3}
   m_PrefabInstance: {fileID: 3255777668158312932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3255777668158312939 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3255777669975087602, guid: c340e53cf033c24429910c41159cfc65, type: 3}
+  m_PrefabInstance: {fileID: 3255777668158312932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3255777668158312940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255777668158312939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c997129d387d21041a7952450afdaa2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
