@@ -1,8 +1,20 @@
 fileFormatVersion: 2
-guid: b77a35d6508557b4ea00c60ad57da924
+guid: 143169144acb34c4f80fb7851d676e09
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 9079258898758659223
+    second: Armature|Attack-run_cavalryman
+  - first:
+      74: 7046180034727643226
+    second: Armature|Attack-standing_cavalryman
+  - first:
+      74: 1627698985966588626
+    second: Armature|Idle_cavalryman
+  - first:
+      74: -5339483418369165629
+    second: Armature|Run_cavalryman
   externalObjects: {}
   materials:
     materialImportMode: 2

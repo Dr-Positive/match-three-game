@@ -10,7 +10,7 @@ public class PlayerGroup
     public List<GameObject> group;
     public PlayerController.Fraction fraction;
 
-    public PlayerGroup(List<GameObject> group, Color color, PlayerController.Fraction fraction = PlayerController.Fraction.Type1)
+    public PlayerGroup(List<GameObject> group, Color color, PlayerController.Fraction fraction = PlayerController.Fraction.None)
     {
         this.group = group;
         this.color = color;
@@ -35,8 +35,13 @@ public class GameController : MonoBehaviour
     public GameObject GroupList;
     void Start()   
     {
-        FindMatches();
         GroupList = GameObject.Find("GroupList");
+        var a = GameObject.FindGameObjectsWithTag("Place");
+        foreach(var b in a)
+        {
+            b.GetComponent<PlaceController>().RenderModel();
+        }
+        FindMatches();
     }
 
     private List<PlayerGroup> checkByPlayerGroups(List<PlayerGroup> existGroups, PlayerController player)
@@ -147,7 +152,7 @@ public class GameController : MonoBehaviour
             if (passedCells.Contains(playerController.mapPosition)) continue;
             
             var group = findGroup(player, players, passedCells, new PlayerGroup(new List<GameObject> { player }, Color.white));
-
+            Debug.Log($@"Ãðóïïà {group.group.Count}");
             var isValidGroup = group.group.Count >= 3;
             if (isValidGroup)
             {
@@ -163,7 +168,7 @@ public class GameController : MonoBehaviour
             }
         }
         playerGroups = newGroups;
-        StartCoroutine(UpdateList());
+        //StartCoroutine(UpdateList());
     }
 
     IEnumerator RestartAll()

@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 1479a64ca0d9f744594463ed980189f3
+guid: 144069c5691a53041bb5e79fbe6a8d01
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -8640075789311063242
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Attack-run"
+      74: 734918506568058699
+    second: Armature|Attack-Standing Maceman
   - first:
-      74: 1367912449037691509
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Idle"
+      74: 2949592810662920191
+    second: Armature|Idle Maceman
   - first:
-      74: 8623177277812041027
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Run"
+      74: 5033053305555660354
+    second: Armature|Run Maceman
   externalObjects: {}
   materials:
     materialImportMode: 2

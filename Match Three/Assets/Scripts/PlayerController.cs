@@ -41,15 +41,12 @@ public class PlayerController : MonoBehaviour
         Player2
     };
     public enum Fraction {
-        Type1,
-        Type2,
-        Type3
-    };
-    public Dictionary<Fraction, Color> FractionColor = new Dictionary<Fraction, Color>
-    {
-        {Fraction.Type1, Color.cyan },
-        {Fraction.Type2, Color.magenta },
-        {Fraction.Type3, Color.yellow }
+        None,
+        Cavalryman,
+        Halberdiers,
+        Knight,
+        Maceman,
+        Spearman
     };
     private float _speed = 0.05f;
     private Rigidbody _rb;
@@ -91,8 +88,8 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log(_gameController);
-        Debug.Log(mapPosition.ToString());
+        //Debug.Log(_gameController);
+        //Debug.Log(mapPosition.ToString());
         SwithPlaceColor(Color.blue);
         _gameController.doSwith(this);
         _gameController.FindMatches();
