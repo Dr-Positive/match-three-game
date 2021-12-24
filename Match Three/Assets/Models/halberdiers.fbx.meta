@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 1479a64ca0d9f744594463ed980189f3
+guid: d971a826d80aa574ab8bfeba0866729b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -8640075789311063242
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Attack-run"
+      74: 101503244648106631
+    second: Armature|Attack-run_halberd
   - first:
-      74: 1367912449037691509
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Idle"
+      74: -4116565524123841994
+    second: Armature|Attack-standing_halberd
   - first:
-      74: 8623177277812041027
-    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Run"
+      74: 8008962287996747963
+    second: Armature|Idle_halberd
   externalObjects: {}
   materials:
     materialImportMode: 2
