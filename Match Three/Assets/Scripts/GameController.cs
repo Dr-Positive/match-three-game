@@ -10,7 +10,7 @@ public class PlayerGroup
     public List<GameObject> group;
     public PlayerController.Fraction fraction;
 
-    public PlayerGroup(List<GameObject> group, Color color, PlayerController.Fraction fraction = PlayerController.Fraction.Type1)
+    public PlayerGroup(List<GameObject> group, Color color, PlayerController.Fraction fraction = PlayerController.Fraction.None)
     {
         this.group = group;
         this.color = color;
@@ -19,11 +19,66 @@ public class PlayerGroup
 
     public void ResetGroup()
     {
+        attackEnemu(PlayerController.Team.Player2);
         foreach (var player in group)
         {
             player.GetComponent<PlayerController>().Reset();
         }
     }
+
+    public void attackEnemu(PlayerController.Team enemyTeam)
+    {
+        var colums = group
+            .Select(item => item.GetComponent<PlayerController>().mapPosition.x)
+            .Distinct()
+            .ToList();
+        
+        foreach(var currentX in colums)
+        {
+            var players = GameObject.FindGameObjectsWithTag("Player")
+                .Where(item => item.GetComponent<PlayerController>().team == enemyTeam)
+                .Where(item => item.GetComponent<PlayerController>().mapPosition.x == currentX)
+                .OrderBy(item => item.GetComponent<PlayerController>().mapPosition.x)
+                .ThenBy(item => item.GetComponent<PlayerController>().mapPosition.y)
+                .ToList();
+
+            var currentXGroup = group
+                .Where(item => item.GetComponent<PlayerController>().mapPosition.x == currentX)
+                .OrderBy(item => item.GetComponent<PlayerController>().mapPosition.y)
+                .ToList();
+            var maxItemCount = Mathf.Max(players.Count, currentXGroup.Count);
+            for(var i = 0; i < maxItemCount; i++)
+            {
+                if (currentXGroup.Count == 0 || players.Count == 0) break;
+                var currentPlayerObject = currentXGroup.Last();
+                var currentPlayer = currentPlayerObject.GetComponent<PlayerController>();
+                var currentEnemyObject = players.Last();
+                var currentEnemy = currentEnemyObject.GetComponent<PlayerController>();
+                if (currentPlayer.canKill(currentEnemy.fraction))
+                {
+                    players.Remove(currentEnemyObject);
+                    currentEnemy.Reset();
+                }
+                else
+                {
+                    currentXGroup.Remove(currentPlayerObject);
+                }
+            }
+
+
+            foreach (var currentGroupItem in currentXGroup)
+            {
+                var currentPlayer = currentGroupItem.GetComponent<PlayerController>();
+                foreach(var currentEnemyObj in players)
+                {
+                    var currentEnemyObject = players.Last();
+                    var currentEnemy = currentEnemyObject.GetComponent<PlayerController>();
+                    
+                }
+            }
+        }
+    }
+
 }
 
 
@@ -35,8 +90,13 @@ public class GameController : MonoBehaviour
     public GameObject GroupList;
     void Start()   
     {
-        FindMatches();
         GroupList = GameObject.Find("GroupList");
+        var a = GameObject.FindGameObjectsWithTag("Place");
+        foreach(var b in a)
+        {
+            b.GetComponent<PlaceController>().RenderModel();
+        }
+        FindMatches();
     }
 
     private List<PlayerGroup> checkByPlayerGroups(List<PlayerGroup> existGroups, PlayerController player)
@@ -147,7 +207,7 @@ public class GameController : MonoBehaviour
             if (passedCells.Contains(playerController.mapPosition)) continue;
             
             var group = findGroup(player, players, passedCells, new PlayerGroup(new List<GameObject> { player }, Color.white));
-
+            //Debug.Log($@"Группа {group.group.Count}");
             var isValidGroup = group.group.Count >= 3;
             if (isValidGroup)
             {
@@ -169,13 +229,16 @@ public class GameController : MonoBehaviour
     IEnumerator RestartAll()
     {
         yield return new WaitForSeconds(0.1f);
-        FillEmptyPlaces();
+        FillEmptyPlaces(PlayerController.Team.Player1);
+        //FillEmptyPlaces(PlayerController.Team.Player2);
+        UpdateList();
         FindMatches();
     }
 
     IEnumerator UpdateList()
     {
         yield return null;
+        //Debug.Log("123");
         var view = Resources.Load("PlayerGroup") as GameObject;
         var GroupList = GameObject.Find("GroupList");
         for (int i = 0; i < GroupList.transform.childCount; i++)
@@ -191,7 +254,7 @@ public class GameController : MonoBehaviour
             obj.transform.Find("Name").GetComponent<Text>().text = $@"Группа длинны {group.group.Count}";
             obj.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() =>
             {
-                Debug.Log("delete");
+                //Debug.Log("delete");
                 group.ResetGroup();
                 playerGroups.Remove(group);
                 StartCoroutine(RestartAll());
@@ -255,14 +318,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void FillEmptyPlaces()
+    public void FillEmptyPlaces(PlayerController.Team team)
     {
         //Dictionary<int, List<GameObject>> places;
         var allPlaces = GameObject.FindGameObjectsWithTag("Place")
             .Where(item =>
             {
                 var controller = item.GetComponent<PlaceController>();
-                return controller.PlaceTeam == PlayerController.Team.Player1;
+                return controller.PlaceTeam == team;
             })
             .ToList();
         var xToEmptyPlaces = allPlaces
@@ -283,7 +346,8 @@ public class GameController : MonoBehaviour
                 .Where(x =>
                 {
                     var controller = x.GetComponent<PlaceController>();
-                    return controller.PlaceX == emptyPlaces.Key && !controller.isEmpty && controller.PlaceY < maxEmptyY;
+                    var a = team == PlayerController.Team.Player1 ? controller.PlaceY < maxEmptyY : controller.PlaceY > maxEmptyY;
+                    return controller.PlaceX == emptyPlaces.Key && !controller.isEmpty && a;
 
                 })
                 .ToList();
@@ -291,7 +355,9 @@ public class GameController : MonoBehaviour
             bottomPlaces.Reverse();
             var maxY = bottomPlaces.Max(item => item.GetComponent<PlaceController>().PlaceY);
             var offsetY = maxEmptyY - maxY;
+            //if (team == PlayerController.Team.Player2) offsetY *= -1;
             Debug.Log("Нужно передвинуть на " + offsetY);
+            Debug.Log("Пустых клеток " + bottomPlaces.Count);
             //Проблема в обмене плейсами тут снизу найти потом
             MoveUp(allPlaces, bottomPlaces, emptyPlaces, offsetY);
         }
@@ -305,8 +371,10 @@ public class GameController : MonoBehaviour
 
     void MoveUp(List<GameObject> allPlaces, List<GameObject> bottomPlaces, KeyValuePair<int, List<GameObject>> emptyPlaces, int offsetY)
     {
+        Debug.Log(bottomPlaces);
         foreach (var bottomPlace in bottomPlaces)
         {
+            Debug.Log("123");
             var oldPlaceController = bottomPlace.GetComponent<PlaceController>();
             var playerController = oldPlaceController.viewModel.GetComponent<PlayerController>();
             Debug.Log($@"Ищем кЛетку с Y = " + (oldPlaceController.PlaceY + offsetY));

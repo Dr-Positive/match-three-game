@@ -41,15 +41,12 @@ public class PlayerController : MonoBehaviour
         Player2
     };
     public enum Fraction {
-        Type1,
-        Type2,
-        Type3
-    };
-    public Dictionary<Fraction, Color> FractionColor = new Dictionary<Fraction, Color>
-    {
-        {Fraction.Type1, Color.cyan },
-        {Fraction.Type2, Color.magenta },
-        {Fraction.Type3, Color.yellow }
+        Cavalryman,
+        Halberdiers,
+        Knight,
+        Maceman,
+        Spearman,
+        None
     };
     private float _speed = 0.05f;
     private Rigidbody _rb;
@@ -91,14 +88,11 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!GamePause.GameIsPause)
-        {
-            Debug.Log(_gameController);
-            Debug.Log(mapPosition.ToString());
-            SwithPlaceColor(Color.blue);
-            _gameController.doSwith(this);
-            _gameController.FindMatches();
-        }
+        //Debug.Log(_gameController);
+        //Debug.Log(mapPosition.ToString());
+        SwithPlaceColor(Color.blue);
+        _gameController.doSwith(this);
+        _gameController.FindMatches();
     }
 
     public void Reset()
@@ -111,6 +105,19 @@ public class PlayerController : MonoBehaviour
     public void moveTo(Vector3 targetPosition)
     {
         transform.position = targetPosition;
+    }
+
+    public bool canKill(Fraction enemuFraction)
+    {
+        return fraction switch
+        {
+            Fraction.Cavalryman => enemuFraction == Fraction.Maceman || enemuFraction == Fraction.Knight,
+            Fraction.Halberdiers => enemuFraction == Fraction.Cavalryman || enemuFraction == Fraction.Maceman,
+            Fraction.Knight => enemuFraction == Fraction.Spearman || enemuFraction == Fraction.Halberdiers,
+            Fraction.Maceman => enemuFraction == Fraction.Knight || enemuFraction == Fraction.Spearman,
+            Fraction.Spearman => enemuFraction == Fraction.Halberdiers || enemuFraction == Fraction.Cavalryman,
+            _ => false,
+        };
     }
 
     void OnCollisionEnter(UnityEngine.Collision collision)
