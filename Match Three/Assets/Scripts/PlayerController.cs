@@ -41,12 +41,12 @@ public class PlayerController : MonoBehaviour
         Player2
     };
     public enum Fraction {
-        None,
         Cavalryman,
         Halberdiers,
         Knight,
         Maceman,
-        Spearman
+        Spearman,
+        None
     };
     private float _speed = 0.05f;
     private Rigidbody _rb;
@@ -105,6 +105,19 @@ public class PlayerController : MonoBehaviour
     public void moveTo(Vector3 targetPosition)
     {
         transform.position = targetPosition;
+    }
+
+    public bool canKill(Fraction enemuFraction)
+    {
+        return fraction switch
+        {
+            Fraction.Cavalryman => enemuFraction == Fraction.Maceman || enemuFraction == Fraction.Knight,
+            Fraction.Halberdiers => enemuFraction == Fraction.Cavalryman || enemuFraction == Fraction.Maceman,
+            Fraction.Knight => enemuFraction == Fraction.Spearman || enemuFraction == Fraction.Halberdiers,
+            Fraction.Maceman => enemuFraction == Fraction.Knight || enemuFraction == Fraction.Spearman,
+            Fraction.Spearman => enemuFraction == Fraction.Halberdiers || enemuFraction == Fraction.Cavalryman,
+            _ => false,
+        };
     }
 
     void OnCollisionEnter(UnityEngine.Collision collision)
