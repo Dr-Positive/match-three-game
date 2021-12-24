@@ -1192,6 +1192,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1982487819104865642, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2501325454292676878, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2736909164479446587, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
       propertyPath: m_Name
       value: Castle
@@ -1243,6 +1251,10 @@ PrefabInstance:
     - target: {fileID: 3364370130510193793, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770748070441321103, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 292420e99044f1344bfbabe52a371d90, type: 3}
