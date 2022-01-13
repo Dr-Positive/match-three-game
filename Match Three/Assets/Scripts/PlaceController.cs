@@ -10,6 +10,9 @@ public class PlaceController : MonoBehaviour
 
     private Vector3 com1 = new Vector3(-11.7f, 1.6f, 4.7f);
     private Vector3 com2 = new Vector3(11.7f, 1.4f, 4.7f);
+    private GameObject Player1;
+    private GameObject Player2;
+    private GameObject Player3;
     private List<GameObject> Models;
     private float dX = 1.5f;
     private float dZ = -1.5f;
@@ -23,12 +26,12 @@ public class PlaceController : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        var cavalryman = Resources.Load("cavalryman") as GameObject;
-        var halberdiers = Resources.Load("halberdiers") as GameObject;
-        var knight = Resources.Load("knight") as GameObject;
-        var maceman = Resources.Load("maceman") as GameObject;
-        var spearman = Resources.Load("spearman") as GameObject;
-        Models = new List<GameObject>() { cavalryman, halberdiers, knight, maceman, spearman };
+        Player1 = Resources.Load("player") as GameObject;
+        Player2 = Resources.Load("player2") as GameObject;
+        Player3 = Resources.Load("player3") as GameObject;
+        Models = new List<GameObject>() { Player1, Player2, Player3 };
+        RenderModel();
+
     }
 
     public Vector3 getPositionForModel(bool isFirstTeam) => (isFirstTeam ? com1 : com2) + new Vector3((isFirstTeam ? dX : -dX) * PlaceY, 0, dZ * PlaceX);
@@ -39,6 +42,8 @@ public class PlaceController : MonoBehaviour
     {
         var index = UnityEngine.Random.Range(0, Models.Count);
         var model = Models[index];
+        var dx = dX;
+        var dz = dZ;
         var isFirstTeam = PlaceTeam == PlayerController.Team.Player1;
         //var originalPos = isFirstTeam ? com1 : com2;
         //if (!isFirstTeam) dx = -dx;
