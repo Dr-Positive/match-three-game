@@ -1,8 +1,17 @@
 fileFormatVersion: 2
-guid: 1479a64ca0d9f744594463ed980189f3
+guid: 06e34d665bcc95841829eb2a13d4bd44
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -8640075789311063242
+    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Attack-run"
+  - first:
+      74: 1367912449037691509
+    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Idle"
+  - first:
+      74: 8623177277812041027
+    second: "\u0421\u043A\u0435\u043B\u0435\u0442|Run"
   externalObjects: {}
   materials:
     materialImportMode: 2

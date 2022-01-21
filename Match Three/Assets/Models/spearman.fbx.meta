@@ -1,8 +1,23 @@
 fileFormatVersion: 2
-guid: 7984f87beca0f334fa2115a696170781
+guid: deeba17caed70074a9764841813f1615
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 7807602801906135491
+    second: Armature|-
+  - first:
+      74: 7529925142172494968
+    second: Armature|Attack-run_spearman
+  - first:
+      74: 7068073271443979614
+    second: Armature|Attack-standing_spearman
+  - first:
+      74: -2299269091657728876
+    second: Armature|Idle_spearman
+  - first:
+      74: -1452558960451537442
+    second: Armature|Run_spearman
   externalObjects: {}
   materials:
     materialImportMode: 2

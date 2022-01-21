@@ -8,12 +8,8 @@ public class PlaceController : MonoBehaviour
 {
     
 
-    private Vector3 com1 = new Vector3(-11.7f, 1.6f, 4.7f);
-    private Vector3 com2 = new Vector3(11.7f, 1.4f, 4.7f);
-    private GameObject Player1;
-    private GameObject Player2;
-    private GameObject Player3;
-    private List<GameObject> Models;
+    private Vector3 com1 = new Vector3(-11.7f, 1.25f, 4.7f);
+    private Vector3 com2 = new Vector3(11.7f, 1.25f, -4.3f);
     private float dX = 1.5f;
     private float dZ = -1.5f;
     public int PlaceX;
@@ -26,22 +22,16 @@ public class PlaceController : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        Player1 = Resources.Load("player") as GameObject;
-        Player2 = Resources.Load("player2") as GameObject;
-        Player3 = Resources.Load("player3") as GameObject;
-        Models = new List<GameObject>() { Player1, Player2, Player3 };
-        RenderModel();
-
     }
 
-    public Vector3 getPositionForModel(bool isFirstTeam) => (isFirstTeam ? com1 : com2) + new Vector3((isFirstTeam ? dX : -dX) * PlaceY, 0, dZ * PlaceX);
+    public Vector3 getPositionForModel(bool isFirstTeam) => (isFirstTeam ? com1 : com2) + new Vector3((isFirstTeam ? dX : -dX) * PlaceY, 0, (isFirstTeam ? dZ : -dZ) * PlaceX);
 
     public MapPosition GetCurrentMapPosition() => new MapPosition(PlaceX, PlaceY);
 
-    public void RenderModel()
+    public void RenderModel(List<GameObject> models)
     {
-        var index = UnityEngine.Random.Range(0, Models.Count);
-        var model = Models[index];
+        var index = UnityEngine.Random.Range(0, models.Count);
+        var model = models[index];
         var dx = dX;
         var dz = dZ;
         var isFirstTeam = PlaceTeam == PlayerController.Team.Player1;
