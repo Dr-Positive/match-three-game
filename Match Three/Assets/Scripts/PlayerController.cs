@@ -36,9 +36,9 @@ public class MapPosition
 public class PlayerController : MonoBehaviour
 {
     public enum Team {
-        Player1,
-        Player2,
         None,
+        Player1,
+        Player2
     };
     public enum Fraction {
         Cavalryman,
@@ -48,14 +48,13 @@ public class PlayerController : MonoBehaviour
         Spearman,
         None
     };
-    //private float _speed = 0.05f;
+    private float _speed = 0.05f;
     private Rigidbody _rb;
     private GameController _gameController;
     public MapPosition mapPosition;
     public PlaceController placeController;
     public Team team = Team.None;
     public Fraction fraction;
-    public AudioClip Sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,14 +81,6 @@ public class PlayerController : MonoBehaviour
         //transform.position += offset;
     }
 
-    public void DoShot(PlayerController owner = null)
-    {
-        var bulletObj = Resources.Load("Bullet") as GameObject;
-        var bulletController = bulletObj.GetComponent<BulletController>();
-        bulletController.owner = owner?owner:this;
-        Instantiate(bulletObj, this.transform.position + new Vector3(team == Team.Player1? 0.6f: -0.6f, 0.2f,0), Quaternion.identity);
-    }
-
     public void SwithPlaceColor(Color color)
     {
         placeController.renderer.material.color = color;
@@ -97,22 +88,17 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        //DoShot();
-        if (_gameController.CurrentPlayer != (GameController.Players)team) return;
         //Debug.Log(_gameController);
         //Debug.Log(mapPosition.ToString());
         SwithPlaceColor(Color.blue);
-        _gameController.DoSwith(this);
+        _gameController.doSwith(this);
         _gameController.FindMatches();
     }
 
     public void Reset()
     {
-        //GetComponent<AudioSource>().PlayOneShot(Sound);
-        Debug.Log("123");
         Destroy(transform.gameObject);
         placeController.isEmpty = true;
-        placeController.viewModel = null;
         SwithPlaceColor(Color.white);
     }
 
@@ -121,7 +107,7 @@ public class PlayerController : MonoBehaviour
         transform.position = targetPosition;
     }
 
-    public bool CanKill(Fraction enemuFraction)
+    public bool canKill(Fraction enemuFraction)
     {
         return fraction switch
         {
@@ -134,27 +120,43 @@ public class PlayerController : MonoBehaviour
         };
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        //Debug.Log(1);
-        var bulletController = collision.gameObject.GetComponent<BulletController>();
-        if (!bulletController) { return; }
-        else if (team == bulletController.owner.team)
-        {
-            Destroy(bulletController.gameObject);
-            DoShot(bulletController.owner);
-            //bulletController.GetComponent<Rigidbody>().isKinematic = true;
-            return;
-        }
-        if (bulletController.owner.CanKill(fraction))
-        {
-            Reset();
-        }
-        else
-        {
-            Destroy(bulletController.gameObject);
-            bulletController.owner.Reset();
-        }
+        //if (collision.gameObject.name == "KillZone") 
+        //{
+        //    Destroy(transform.gameObject);
+        //    //GameInit.players.Remove(transform.gameObject);
+        //    return;
+        //}
+        //if (team == Team.Player2) return;
+        ////Debug.Log(collision.gameObject.name);
+        //var player2 = collision.gameObject.GetComponent<PlayerController>();
+        //if (player2)
+        //{
+        //    var i = Random.Range(0, 2);
+        //    Debug.Log(i);
+        //    //var isKill =  i == 0;
+        //    if (i == 0)
+        //    {
+        //        Destroy(collision.gameObject);
+        //        //GameInit.players.Remove(collision.gameObject);
+
+        //    }
+        //    else if(i == 1)
+        //    {
+        //        Destroy(transform.gameObject);
+        //        //GameInit.players.Remove(transform.gameObject);
+
+        //    }
+        //    //else
+        //    //{
+        //    //    Destroy(collision.gameObject);
+        //    //    Destroy(transform.gameObject);
+        //    //    GameInit.players.Remove(collision.gameObject);
+        //    //    GameInit.players.Remove(transform.gameObject);
+        //    //}
+
+        //}
     }
 
 }
